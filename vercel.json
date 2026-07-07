@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "hawee-giao-thuong-site.vercel.app" }],
+      "destination": "https://giaothuong.hawee.vn/$1",
+      "permanent": true
+    }
+  ]
+}

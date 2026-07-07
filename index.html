@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bản Tin Giao Thương HAWEE · Thư Viện Số Cũ</title>
+<script defer src="/_vercel/insights/script.js"></script>
+<!-- Microsoft Clarity — thay x00f0izt9n sau khi tạo project tại clarity.microsoft.com -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","x00f0izt9n");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* ── TOKENS ── */
+:root {
+  --mg:     #C9187F;
+  --mg-dk:  #8A1060;
+  --navy:   #1B3A6B;
+  --violet: #3A1070;
+  --coral:  #FF7B4A;
+  --dom:    #B84A00;
+  --border: #E8E0D8;
+  --muted:  #8C7F76;
+  --shadow: 0 2px 16px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.05);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,.11), 0 2px 8px rgba(0,0,0,.07);
+}
+
+/* ════════════════════════════════════
+   HEADER
+════════════════════════════════════ */
+.hdr {
+  background: linear-gradient(125deg,
+    #0D2248 0%, #3A1070 22%,
+    #8A1060 44%, #C9187F 62%,
+    #E8456A 78%, #FF7B4A 100%);
+}
+
+.ticker {
+  background: rgba(0,0,0,.22);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.ticker::-webkit-scrollbar { display: none; }
+.t-row {
+  display: flex; align-items: center;
+  padding: 8px 20px;
+  width: max-content; min-width: 100%;
+  gap: 0;
+}
+.t-chip {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.8);
+  white-space: nowrap;
+  padding-right: 16px;
+}
+.t-chip b { font-size: 18px; font-weight: 800; color: #fff; line-height: 1; }
+
+.hdr-body {
+  padding: 28px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.hdr-logo { display: flex; align-items: center; justify-content: center; }
+.hdr-logo img { height: 38px; width: auto; }
+.hdr-title {
+  font-size: clamp(22px, 5.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  line-height: 1.15;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,.2);
+}
+.hdr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.9);
+  text-transform: uppercase;
+}
+.hdr-pill span { opacity: .5; }
+
+.hdr-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent,
+    rgba(255,255,255,.3) 30%,
+    rgba(255,255,255,.5) 50%,
+    rgba(255,255,255,.3) 70%, transparent);
+}
+
+/* ════════════════════════════════════
+   INTRO BAND
+════════════════════════════════════ */
+.intro-band {
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 13.5px;
+  color: rgba(226,220,245,.65);
+  line-height: 1.8;
+}
+.intro-band strong { color: #FF80C8; font-weight: 700; }
+
+/* ════════════════════════════════════
+   GALLERY
+════════════════════════════════════ */
+.gallery-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 16px 60px;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.issue-card {
+  display: block;
+  background: rgba(255,255,255,.042);
+  backdrop-filter: blur(28px) saturate(1.6);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07);
+  transition: box-shadow .2s, transform .2s, border-color .2s;
+}
+.issue-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.15);
+  box-shadow: 0 8px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(201,24,127,.15);
+}
+.issue-img {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.issue-img img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.issue-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.issue-period {
+  font-size: 14px;
+  font-weight: 800;
+  color: #F0ECFF;
+}
+.issue-cta {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 700;
+  color: #FF80C8;
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+.footer {
+  background: linear-gradient(135deg, #0D2248, #3A1070 55%, #50002F);
+  color: #fff;
+  padding: 40px 20px 0;
+  margin-top: 40px;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 36px;
+}
+.f-logo { height: 34px; width: auto; margin-bottom: 12px; }
+.f-tagline { font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.85); line-height: 1.6; margin-bottom: 6px; }
+.f-desc { font-size: 12px; color: rgba(255,255,255,.45); line-height: 1.85; }
+
+.f-contact-label {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); margin-bottom: 14px;
+}
+.f-hotline {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.f-hotline-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--mg);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.f-hotline-num { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: .02em; }
+.f-hotline-sub { font-size: 10.5px; color: rgba(255,255,255,.45); margin-top: 1px; }
+.f-contact-info { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.9; }
+.f-contact-info strong { color: rgba(255,255,255,.8); }
+
+.footer-bottom {
+  max-width: 1100px; margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 14px 0;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  text-align: center;
+}
+
+/* ════════════════════════════════════
+   DESKTOP  ≥ 720px
+════════════════════════════════════ */
+@media (min-width: 720px) {
+  .hdr-body { flex-direction: row; text-align: left; padding: 32px 32px 36px; }
+  .hdr-center { flex: 1; text-align: center; }
+  .hdr-right { text-align: right; }
+  .footer-inner { flex-direction: row; }
+  .footer-brand { flex: 2; }
+  .footer-contact { flex: 1.2; }
+}
+
+@media print {
+  .ticker { display: none; }
+  .issue-card { break-inside: avoid; }
+}
+
+/* ════════════════════════════════════
+   GLASS DARK BACKGROUND — Futuristic
+════════════════════════════════════ */
+body {
+  background: #07111F;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 0%, rgba(58,16,112,.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(80,0,47,.45) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(27,58,107,.2) 0%, transparent 70%);
+  background-attachment: fixed;
+  color: #E2DCF5;
+}
+
+</style>
+</head>
+<body>
+
+<!-- SVG icons -->
+<svg style="display:none">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<!-- ══ HEADER ══ -->
+<header class="hdr">
+  <div class="ticker">
+    <div class="t-row">
+      <div class="t-chip"><b id="issue-count">–</b>&nbsp;số đã lưu trữ</div>
+    </div>
+  </div>
+
+  <div class="hdr-body">
+    <div class="hdr-logo">
+      <img src="img/hawee-logo-white.png" alt="HAWEE">
+    </div>
+    <div class="hdr-center">
+      <div class="hdr-title">THƯ VIỆN BẢN TIN GIAO THƯƠNG</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-pill" id="latest-pill">–</div>
+    </div>
+  </div>
+  <div class="hdr-rule"></div>
+</header>
+
+
+<!-- ══ INTRO ══ -->
+<div class="intro-band">
+  Toàn bộ các số <strong>Bản Tin Giao Thương HAWEE</strong> đã phát hành — bấm vào từng số để xem lại nội dung đầy đủ.
+</div>
+
+
+<!-- ══ GALLERY ══ -->
+<div class="gallery-wrap">
+  <div class="gallery-grid" id="gallery-grid">
+    <p style="opacity:.5;font-size:13px">Đang tải danh sách bản tin…</p>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <img src="img/hawee-logo-white.png" alt="HAWEE" class="f-logo">
+      <div class="f-tagline">Kết nối cơ hội – Mở rộng thị trường<br>Nâng tầm năng lực doanh nghiệp</div>
+      <div class="f-desc">Ban Giao Thương HAWEE tổng hợp và cập nhật các cơ hội học tập, giao thương và kết nối thị trường dành cho hội viên. Bản tin phát hành tuần đầu tiên mỗi tháng.</div>
+    </div>
+
+    <div class="footer-contact">
+      <div class="f-contact-label">Liên hệ</div>
+      <div class="f-hotline">
+        <div class="f-hotline-dot">
+          <svg width="18" height="18" style="color:#fff"><use href="#i-phone"/></svg>
+        </div>
+        <div>
+          <div class="f-hotline-num">091 947 99 55</div>
+          <div class="f-hotline-sub">Hotline HAWEE</div>
+        </div>
+      </div>
+      <div class="f-contact-info">
+        <strong>Ban Giao Thương HAWEE</strong>
+        Hội Nữ Doanh Nhân TP.HCM<br>
+        <a href="https://www.hawee.vn" target="_blank" style="color:inherit;text-decoration:underline">hawee.vn</a> · Ms. Anh Thơ: 0968 734 119
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    Bản Tin Giao Thương HAWEE · Thư viện lưu trữ · Lưu hành nội bộ hội viên
+  </div>
+</footer>
+
+<script src="js/archive.js"></script>
+</body>
+</html>
