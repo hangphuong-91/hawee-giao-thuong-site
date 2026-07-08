@@ -19,6 +19,8 @@ Hướng dẫn cho Claude Code khi làm việc với repo này.
 1. Chi hội nộp tin qua **Google Form** → đổ vào **Google Sheet**.
 2. **Người kiểm tin** duyệt nội dung trong Sheet.
 3. Agent chuyển nội dung đã duyệt thành dataset đúng schema, gọi **Canva Autofill** (`create-design-from-brand-template`) để tự sinh 1 thiết kế mới đã điền sẵn nội dung.
+
+   → Bước 1-3 đã code hóa tại `hawee-giao-thuong/automation/` (form tạo bằng Apps Script, Sheet có cột duyệt tin, script `build-canva-dataset.js` build dataset từ các dòng đã duyệt). Chỉ còn thiếu bước cuối: gọi `create-design-from-brand-template` thật khi Brand Template Canva đã dựng xong và có `brand_template_id`. Xem `hawee-giao-thuong/automation/README.md`.
 4. **Người thiết kế** mở thiết kế vừa sinh ra trong Canva, chỉnh nhẹ nếu lỗi bố cục.
 5. Người thiết kế bấm **"Publish as website"** ngay trong Canva — đây là bước publish chính, không cần code.
 6. Người thiết kế di chuyển thiết kế hoàn chỉnh vào folder Canva **"Đã Publish"** (ID: `FAHOttyBecM`) — hành động này vừa là chỗ lưu trữ, vừa là tín hiệu cho bước 7.
