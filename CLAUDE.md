@@ -48,6 +48,25 @@ Chạy ngay sau khi vừa publish xong 1 số bản tin trên Canva (không có 
 
 **Giới hạn cần biết:** link của entry sẽ trỏ tới URL xem thiết kế Canva gốc (`https://www.canva.com/design/{design_id}/view`), **không phải** link Canva Site đã publish (Canva không expose URL đó qua API). Nếu cần link Canva Site đẹp hơn, cần người kiểm tin dán link đó vào Sheet/nơi khác để agent lấy — hiện chưa có cơ chế này.
 
+### Cách 2 (khuyên dùng khi có embed code): nhúng thiết kế ngay trên site, thay vì chỉ link ra Canva
+
+Canva cho phép lấy đoạn **embed code** (Share → More → Embed) — 1 div wrapper co giãn theo tỉ lệ + 1 iframe. Nhúng cách này giữ người xem ở lại `giaothuong.hawee.vn` (có header/footer thương hiệu bao quanh) thay vì bấm ra ngoài canva.com. Đã kiểm chứng bằng Puppeteer: iframe tải đúng nội dung thật, container co giãn đúng tỉ lệ trên mobile lẫn desktop.
+
+Cách làm:
+1. Trong Canva, mở design đã publish → Share → More → Embed → copy nguyên đoạn code (div + iframe). **Không tự tính lại số `padding-top`** — mỗi design có tỉ lệ khung hình riêng, dùng đúng số Canva đưa ra.
+2. Tạo file `archive/thang-X-2026.html`: copy phần `<head>` + `<header class="hdr">` + `<footer class="footer">` từ `archive/thang-6-2026.html` (giữ nguyên branding), phần nội dung giữa header/footer thay bằng:
+   ```html
+   <div class="embed-wrap">
+     <!-- dán nguyên đoạn embed code Canva vào đây -->
+   </div>
+   <div class="embed-attr"><!-- dòng attribution "by ..." Canva yêu cầu giữ lại, không xoá --></div>
+   <a class="back-link" href="../index.html">← Quay lại thư viện</a>
+   ```
+   CSS cần thêm: `.embed-wrap { max-width: 720px; margin: 0 auto; padding: 32px 16px 8px; }`
+3. Trong `archive.json`, set `"link_url": "archive/thang-X-2026.html"` và để `"canva_view_url": null` — gallery ưu tiên `link_url` khi có (xem `js/archive.js`, dòng `issue.link_url || issue.canva_view_url`).
+
+**Lưu ý quan trọng:** design phải bật chia sẻ "Anyone with the link can view" thì iframe mới tải được nội dung. Vì repo này **Public** trên GitHub và sẽ deploy public, **chỉ nhúng bản đã chốt/đã duyệt** — không nhúng design còn nháp hoặc chứa nội dung nội bộ chưa công khai (ảnh hội viên, số liệu chưa công bố...), vì URL trang sẽ hiển thị được với bất kỳ ai có link, kể cả trước khi bạn chủ động công bố.
+
 ### Schema `data/archive.json`
 
 ```json

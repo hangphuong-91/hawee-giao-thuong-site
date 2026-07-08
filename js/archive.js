@@ -14,7 +14,7 @@
       if (latestPillEl && issues[0]) latestPillEl.textContent = issues[0].period.toUpperCase();
 
       grid.innerHTML = issues.map(function (issue) {
-        var href = issue.canva_view_url || issue.link_url || '#';
+        var href = issue.link_url || issue.canva_view_url || '#';
         return (
           '<a class="issue-card" href="' + href + '" target="_blank" rel="noopener">' +
             '<div class="issue-img">' +
