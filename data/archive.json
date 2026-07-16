@@ -2,10 +2,21 @@
   "meta": {
     "title": "Bản Tin Giao Thương HAWEE",
     "description": "Thư viện lưu trữ các số Bản Tin Giao Thương hằng tháng của HAWEE",
-    "last_synced_at": "2026-07-07T00:00:00+07:00",
+    "last_synced_at": "2026-07-16T00:00:00+07:00",
     "last_sync_status": "ok"
   },
   "issues": [
+    {
+      "id": "thang-7-2026",
+      "period": "Tháng 7/2026",
+      "period_sort": "2026-07",
+      "source": "canva",
+      "canva_design_id": "DAHOlOAG80s",
+      "canva_view_url": null,
+      "link_url": "archive/thang-7-2026.html",
+      "cover_image": "media/archive/thang-7-2026-cover.png",
+      "published_at": "2026-07-16"
+    },
     {
       "id": "thang-6-2026",
       "period": "Tháng 6/2026",
