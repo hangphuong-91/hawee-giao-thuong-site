@@ -10,21 +10,20 @@ Hướng dẫn cho Claude Code khi làm việc với repo này.
 
 - Không sản xuất nội dung bản tin hàng tháng (việc đó nằm trong Canva).
 - Không có trang đọc chi tiết từng bài/chương trình (đã chuyển hẳn qua Canva).
-- Không đọc/ghi Google Form hay Google Sheet.
 - Không gọi Canva Autofill/Data Merge.
 - Không phải nơi publish chính thức của bản tin (nơi publish chính là nút **"Publish as website"** trong Canva).
 
 ## Toàn bộ pipeline (phần lớn nằm ngoài repo này)
 
-1. Chi hội nộp tin qua **Google Form** → đổ vào **Google Sheet**.
+1. Chi hội nộp tin qua **Google Form "Chi Hội Nộp Tin"** → đổ vào **Google Sheet**.
 2. **Người kiểm tin** duyệt nội dung trong Sheet.
-3. Agent chuyển nội dung đã duyệt thành dataset đúng schema, gọi **Canva Autofill** (`create-design-from-brand-template`) để tự sinh 1 thiết kế mới đã điền sẵn nội dung.
+3. **Người thiết kế** tạo design trong Canva từ nội dung đã duyệt (tên design: `Bản Tin Giao Thương Tháng X/YYYY`).
+4. Người thiết kế bấm **"Publish as website"** trong Canva + lấy embed code (Share → More → Embed).
+5. Người thiết kế điền **Google Form "BE-HAWEE Bản Tin Giao Thương"** (https://docs.google.com/forms/d/1NCvTCV4od5KF2MJnMEWL_Gl8anEh6sBcGRdpEf-kh6g/edit — 2 trường: Kỳ Phát Hành `YYYY-MM`, Embed Code). **Đây là bước cuối của người thiết kế** — không cần Git, không cần làm thêm gì.
+6. **(TỰ ĐỘNG — Apps Script)** Ngay khi Form submit, Apps Script đọc phản hồi → tạo `archive/thang-X-YYYY.html` → cập nhật `data/archive.json` → push GitHub **(repo này)** → Vercel auto-deploy. Không cần ai can thiệp thủ công.
+7. (Độc lập, không chặn) Người thiết kế move design vào folder Canva **"Đã Publish"** (ID: `FAHOttyBecM`) để lưu trữ — làm bất cứ lúc nào, không ảnh hưởng tới site.
 
-   → Bước 1-3 đã code hóa tại `hawee-giao-thuong/automation/` (form tạo bằng Apps Script, Sheet có cột duyệt tin, script `build-canva-dataset.js` build dataset từ các dòng đã duyệt). Chỉ còn thiếu bước cuối: gọi `create-design-from-brand-template` thật khi Brand Template Canva đã dựng xong và có `brand_template_id`. Xem `hawee-giao-thuong/automation/README.md`.
-4. **Người thiết kế** mở thiết kế vừa sinh ra trong Canva, chỉnh nhẹ nếu lỗi bố cục.
-5. Người thiết kế bấm **"Publish as website"** ngay trong Canva — đây là bước publish chính, không cần code.
-6. Người thiết kế di chuyển thiết kế hoàn chỉnh vào folder Canva **"Đã Publish"** (ID: `FAHOttyBecM`) — hành động này vừa là chỗ lưu trữ, vừa là tín hiệu cho bước 7.
-7. **(Repo này)** Runbook đồng bộ bên dưới được chạy — thủ công, không có lịch tự động — để mirror số bản tin mới vào `data/archive.json`, làm bản sao lưu độc lập, không chặn bước 5.
+**Lưu ý:** có 2 Google Form khác nhau — Form ở Bước 1 (chi hội nộp tin thô, đầu quy trình) và Form ở Bước 5 (người thiết kế bàn giao embed code, kích hoạt tự động hóa). Đừng nhầm khi troubleshoot.
 
 ## Cấu trúc file
 
@@ -35,18 +34,33 @@ Hướng dẫn cho Claude Code khi làm việc với repo này.
 - `media/banner-thang-5/`, `media/banner-thang-6/` — ảnh banner cũ, được `archive/thang-6-2026.html` tham chiếu tới, giữ nguyên không xoá.
 - `fonts/MonaSans_*.ttf` — **hiện không được dùng** (site dùng Google Fonts Montserrat). Giữ lại phòng khi đổi bộ nhận diện, không phải lỗi.
 
-## Runbook đồng bộ Canva → archive.json (chạy thủ công)
+## Runbook đồng bộ thủ công (chỉ dùng khi Apps Script thất bại)
 
-Chạy ngay sau khi vừa publish xong 1 số bản tin trên Canva (không có lịch tự động — chạy khi được yêu cầu):
+**Trường hợp bình thường:** Apps Script tự động xử lý sau khi người thiết kế submit Form "BE-HAWEE Bản Tin Giao Thương". Không cần chạy runbook này.
 
-1. `list-folder-items` trên folder Canva **"Đã Publish"** (`folder_id: FAHOttyBecM`).
-2. Với mỗi design trả về: suy ra `id` từ tiêu đề design (regex `Tháng (\d+)[/\-](\d{4})` → `thang-{d}-{yyyy}`).
-3. So với `data/archive.json → issues[].id` — bỏ qua nếu đã có (đây chính là cơ chế "đã đồng bộ chưa", không cần file trạng thái riêng).
-4. Với design mới: `get-design` (xác nhận tên/id/pages), `get-design-thumbnail` (lấy ảnh bìa) — **tải hẳn ảnh về và lưu vào `media/archive/<id>-cover.jpg`**, không lưu thẳng URL Canva (URL có thể hết hạn).
-5. Thêm entry mới vào `data/archive.json → issues[]` theo đúng schema bên dưới, cập nhật `meta.last_synced_at` / `meta.last_sync_status`.
-6. `git add` đúng các file thay đổi (không `git add -A`) → `git commit -m "sync: archive N số mới từ Canva"` → `git push`. Vercel đã nối GitHub nên push xong là tự deploy.
+**Dùng runbook này khi:** Apps Script báo lỗi, tháng mới chưa xuất hiện trên site sau 5 phút, hoặc cần thêm tháng cũ bị bỏ sót.
 
-**Giới hạn cần biết:** link của entry sẽ trỏ tới URL xem thiết kế Canva gốc (`https://www.canva.com/design/{design_id}/view`), **không phải** link Canva Site đã publish (Canva không expose URL đó qua API). Nếu cần link Canva Site đẹp hơn, cần người kiểm tin dán link đó vào Sheet/nơi khác để agent lấy — hiện chưa có cơ chế này.
+Lấy `period` (Kỳ Phát Hành `YYYY-MM`) + `embed code` từ tab **Responses** của Form (https://docs.google.com/forms/d/1NCvTCV4od5KF2MJnMEWL_Gl8anEh6sBcGRdpEf-kh6g/edit), rồi thực hiện thủ công:
+
+1. Tạo `archive/thang-X-YYYY.html`: copy `archive/thang-7-2026.html`, thay embed code + cập nhật 3 chỗ ghi tháng (`<title>`, `.hdr-pill`, `.footer-bottom`), giữ nguyên `max-width: 960px`.
+2. Thêm entry vào **đầu** mảng `data/archive.json → issues[]`:
+   ```json
+   {
+     "id": "thang-X-YYYY",
+     "period": "Tháng X/YYYY",
+     "period_sort": "YYYY-0X",
+     "source": "canva",
+     "canva_design_id": "DAHxxxxxxxx",
+     "canva_view_url": null,
+     "link_url": "archive/thang-X-YYYY.html",
+     "cover_image": "media/archive/archive-cover.png",
+     "published_at": "YYYY-MM-DD"
+   }
+   ```
+   Cập nhật `meta.last_synced_at` (ISO format `+07:00`).
+3. `git add archive/thang-X-YYYY.html data/archive.json` → commit → `git push origin master`. Không dùng `git add -A`.
+
+Vercel tự deploy sau ~30 giây.
 
 ### Cách 2 (khuyên dùng khi có embed code): nhúng thiết kế ngay trên site, thay vì chỉ link ra Canva
 

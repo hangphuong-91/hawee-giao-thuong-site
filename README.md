@@ -18,13 +18,13 @@ Trang thư viện tĩnh lưu trữ các số Bản Tin Giao Thương HAWEE theo 
 
 ## Thêm số bản tin mới
 
-1. Người thiết kế publish design trên Canva, lấy embed code (Share → More → Embed)
-2. Tạo `archive/thang-X-2026.html` — dùng `archive/thang-7-2026.html` làm template, thay embed code + cập nhật tháng trong header/footer
-3. Cập nhật `data/archive.json` — thêm entry mới vào đầu mảng `issues[]`, dùng `"cover_image": "media/archive/archive-cover.png"`
-4. `git add archive/thang-X-2026.html data/archive.json` → commit → push `master`
-5. Vercel tự deploy sau ~30 giây
+**Tự động** — người thiết kế không cần đụng vào repo này.
 
-Chi tiết đầy đủ trong [`CLAUDE.md`](./CLAUDE.md).
+1. Người thiết kế publish design trên Canva, lấy embed code (Share → More → Embed)
+2. Người thiết kế điền **Google Form "BE-HAWEE Bản Tin Giao Thương"** (Kỳ Phát Hành `YYYY-MM` + Embed Code) → Submit
+3. Apps Script tự động tạo trang HTML + cập nhật `archive.json` + push GitHub → Vercel deploy
+
+Nếu Apps Script thất bại: xem phần "Runbook đồng bộ thủ công" trong [`CLAUDE.md`](./CLAUDE.md).
 
 ---
 
