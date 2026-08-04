@@ -7,17 +7,6 @@
   },
   "issues": [
     {
-      "id": "thang-9-2026",
-      "period": "Tháng 9/2026",
-      "period_sort": "2026-09",
-      "source": "canva",
-      "canva_design_id": "DAHRTBPXdLg",
-      "canva_view_url": null,
-      "link_url": "archive/thang-9-2026.html",
-      "cover_image": "media/archive/thang-9-2026-cover.png",
-      "published_at": "2026-08-04"
-    },
-    {
       "id": "thang-8-2026",
       "period": "Tháng 8/2026",
       "period_sort": "2026-08",
@@ -25,7 +14,7 @@
       "canva_design_id": "DAHQwvCQPHo",
       "canva_view_url": null,
       "link_url": "archive/thang-8-2026.html",
-      "cover_image": "media/archive/thang-8-2026-cover.png",
+      "cover_image": "media/archive/archive-cover.png",
       "published_at": "2026-08-04"
     },
     {
