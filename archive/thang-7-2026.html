@@ -16,14 +16,9 @@ html,body{height:100%;overflow:hidden;display:flex;flex-direction:column}
 body{font-family:'Montserrat','Inter',system-ui,sans-serif;background:#0D2248;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}img{display:block}
 
-.hdr{flex-shrink:0;background:linear-gradient(125deg,#0D2248 0%,#3A1070 22%,#8A1060 44%,#C9187F 62%,#E8456A 78%,#FF7B4A 100%);height:60px;display:flex;align-items:center;padding:0 16px;gap:12px}
-.hdr-back{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7);white-space:nowrap;flex-shrink:0;transition:color .15s}
-.hdr-back:hover{color:#fff}
-.hdr-main{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
-.hdr-logo{height:22px;width:auto}
-.hdr-label{font-size:8.5px;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.5);text-transform:uppercase}
-.hdr-pill{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:10.5px;font-weight:700;letter-spacing:.06em;color:#fff;text-transform:uppercase;white-space:nowrap}
-.hdr-pill span{opacity:.4}
+.hdr{flex-shrink:0;height:44px;background:linear-gradient(125deg,#0D2248 0%,#3A1070 25%,#8A1060 50%,#C9187F 70%,#E8456A 85%,#FF7B4A 100%);display:flex;align-items:center;padding:0 16px}
+.hdr-back{display:inline-flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;border-radius:100px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.8);transition:background .2s,color .2s}
+.hdr-back:hover{background:rgba(255,255,255,.18);color:#fff}
 
 .embed-area{flex:1;position:relative;overflow:hidden}
 .embed-area iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
@@ -39,14 +34,9 @@ a{color:inherit;text-decoration:none}img{display:block}
 
 <header class="hdr">
   <a href="../index.html" class="hdr-back">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     Thư viện
   </a>
-  <div class="hdr-main">
-    <img src="../img/hawee-logo-white.png" alt="HAWEE" class="hdr-logo">
-    <div class="hdr-label">Bản Tin Giao Thương</div>
-  </div>
-  <div class="hdr-pill">THÁNG 7 <span>·</span> 2026</div>
 </header>
 
 <div class="embed-area">
