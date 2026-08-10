@@ -14,24 +14,14 @@
 html,body{height:100%;overflow:hidden;display:flex;flex-direction:column}
 @supports(height:100dvh){html,body{height:100dvh}}
 body{font-family:'Montserrat','Inter',system-ui,sans-serif;background:#0D2248;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
+a{color:inherit;text-decoration:none}img{display:block}
 
-.hdr{flex-shrink:0;height:44px;background:linear-gradient(125deg,#0D2248 0%,#3A1070 25%,#8A1060 50%,#C9187F 70%,#E8456A 85%,#FF7B4A 100%);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.hdr{flex-shrink:0;height:44px;background:linear-gradient(125deg,#0D2248 0%,#3A1070 25%,#8A1060 50%,#C9187F 70%,#E8456A 85%,#FF7B4A 100%);display:flex;align-items:center;padding:0 16px}
 .hdr-back{display:inline-flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;border-radius:100px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.8);transition:background .2s,color .2s}
 .hdr-back:hover{background:rgba(255,255,255,.18);color:#fff}
-.hdr-pg{font-size:11px;color:rgba(255,255,255,.45);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
-.pdf-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-.pdf-area::-webkit-scrollbar{width:3px}
-.pdf-area::-webkit-scrollbar-track{background:transparent}
-.pdf-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
-
-.slide{width:100%}
-.slide canvas{display:block}
-
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:80px 20px;color:rgba(255,255,255,.35);font-size:12px;letter-spacing:.04em;text-align:center;line-height:1.6}
-.spinner{width:28px;height:28px;border:2px solid rgba(255,255,255,.08);border-top-color:rgba(201,24,127,.6);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+.embed-area{flex:1;position:relative;overflow:hidden}
+.embed-area iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
 .ftr{flex-shrink:0;height:38px;background:#0B1E40;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:8px}
 .ftr-period{font-size:10.5px;color:rgba(255,255,255,.3);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -47,107 +37,16 @@ a{color:inherit;text-decoration:none}
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     Thư viện
   </a>
-  <span class="hdr-pg" id="pg"></span>
 </header>
 
-<div class="pdf-area" id="area">
-  <div class="loading" id="load"><div class="spinner"></div>Đang tải bản tin…</div>
+<div class="embed-area">
+  <iframe src="https://www.canva.com/design/DAHOlOAG80s/yJLfgx4aTsCjQE7S4JfBWg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" loading="lazy"></iframe>
 </div>
 
 <div class="ftr">
   <span class="ftr-period">Bản Tin Giao Thương HAWEE · Tháng 7/2026 · Lưu hành nội bộ hội viên</span>
-  <span class="ftr-attr"><a id="canva-link" href="https://www.canva.com/design/DAHOlOAG80s/yJLfgx4aTsCjQE7S4JfBWg/view?utm_content=DAHOlOAG80s&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener">Xem trên Canva</a></span>
+  <span class="ftr-attr"><a href="https://www.canva.com/design/DAHOlOAG80s/yJLfgx4aTsCjQE7S4JfBWg/view?utm_content=DAHOlOAG80s&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener">Xem trên Canva</a></span>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
-
-var PDF_URL = '../media/slides/thang-7-2026.pdf';
-var PERIOD = 'Tháng 7/2026';
-var CANVA_URL = 'https://www.canva.com/design/DAHOlOAG80s/yJLfgx4aTsCjQE7S4JfBWg/view?utm_content=DAHOlOAG80s&utm_campaign=designshare&utm_medium=embeds&utm_source=link';
-
-var area = document.getElementById('area');
-var pgEl = document.getElementById('pg');
-var total = 0;
-var enterTimes = {};
-
-function cl(ev, data) { if (typeof clarity === 'function') clarity('event', ev, data); }
-function clSet(k, v) { if (typeof clarity === 'function') clarity('set', k, v); }
-
-var obs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    var n = +e.target.dataset.n;
-    if (e.isIntersecting) {
-      enterTimes[n] = Date.now();
-      pgEl.textContent = n + ' / ' + total;
-      cl('trang_' + n + '_hien');
-      if (n === total) cl('doc_xong');
-    } else if (enterTimes[n]) {
-      var s = Math.round((Date.now() - enterTimes[n]) / 1000);
-      if (s >= 2) cl('trang_' + n + '_doc', { giay: s });
-      delete enterTimes[n];
-    }
-  });
-}, { threshold: 0.5 });
-
-window.addEventListener('pagehide', function() {
-  Object.keys(enterTimes).forEach(function(n) {
-    var s = Math.round((Date.now() - enterTimes[n]) / 1000);
-    if (s >= 2) cl('trang_' + n + '_doc', { giay: s });
-  });
-});
-
-document.getElementById('canva-link').addEventListener('click', function() { cl('xem_canva'); });
-
-clSet('ban_tin', PERIOD);
-pdfjsLib.getDocument(PDF_URL).promise.then(function(pdf) {
-  total = pdf.numPages;
-  var loadEl = document.getElementById('load');
-  if (loadEl) loadEl.remove();
-  cl('ban_tin_mo', { trang: total });
-
-  var dpr = window.devicePixelRatio || 1;
-  var W = area.offsetWidth || window.innerWidth;
-  var chain = Promise.resolve();
-
-  for (var i = 1; i <= total; i++) {
-    (function(pageNum) {
-      chain = chain.then(function() {
-        return pdf.getPage(pageNum).then(function(page) {
-          var vp = page.getViewport({ scale: 1 });
-          var svp = page.getViewport({ scale: (W / vp.width) * dpr });
-          var wrap = document.createElement('div');
-          wrap.className = 'slide';
-          wrap.dataset.n = pageNum;
-          var cv = document.createElement('canvas');
-          cv.width = svp.width;
-          cv.height = svp.height;
-          cv.style.width = W + 'px';
-          cv.style.height = Math.round(svp.height / dpr) + 'px';
-          cv.style.display = 'block';
-          return page.render({ canvasContext: cv.getContext('2d'), viewport: svp }).promise.then(function() {
-            cv.addEventListener('click', function(ev) {
-              var r = cv.getBoundingClientRect();
-              cl('trang_' + pageNum + '_click', {
-                x: Math.round((ev.clientX - r.left) / r.width * 100) + '%',
-                y: Math.round((ev.clientY - r.top) / r.height * 100) + '%'
-              });
-            });
-            wrap.appendChild(cv);
-            area.appendChild(wrap);
-            obs.observe(wrap);
-          });
-        });
-      });
-    })(i);
-  }
-}).catch(function(err) {
-  var loadEl = document.getElementById('load');
-  if (loadEl) loadEl.innerHTML = 'Không tải được bản tin.<br><a href="' + CANVA_URL + '" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);text-decoration:underline">Xem trên Canva ↗</a>';
-  console.error('PDF load error:', err);
-});
-</script>
 
 </body>
 </html>
