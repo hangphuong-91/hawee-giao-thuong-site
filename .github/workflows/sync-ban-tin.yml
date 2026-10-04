@@ -1,0 +1,32 @@
+name: Sync Bản Tin từ Google Sheet
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 11h sáng giờ VN (UTC+7) mỗi ngày
+  workflow_dispatch:        # cho phép chạy thủ công 1 nút
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync từ Google Sheet
+        env:
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+        run: node .github/scripts/sync-from-sheet.js
+
+      - name: Commit và push nếu có thay đổi
+        run: |
+          git config user.name "HAWEE Bot"
+          git config user.email "bot@hawee.vn"
+          git add -A
+          git diff --staged --quiet || git commit -m "auto: sync ban tin tu google sheet"
+          git push

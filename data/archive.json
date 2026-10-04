@@ -7,6 +7,17 @@
   },
   "issues": [
     {
+      "id": "thang-10-2026",
+      "period": "Tháng 10/2026",
+      "period_sort": "2026-10",
+      "source": "canva",
+      "canva_design_id": "DAHXAqMacRw",
+      "canva_view_url": null,
+      "link_url": "archive/thang-10-2026.html",
+      "cover_image": "media/archive/archive-cover.png",
+      "published_at": "2026-10-04"
+    },
+    {
       "id": "thang-9-2026",
       "period": "Tháng 9/2026",
       "period_sort": "2026-09",
