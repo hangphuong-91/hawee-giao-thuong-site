@@ -1,9 +1,9 @@
 name: Sync Bản Tin từ Google Sheet
 
 on:
-  schedule:
-    - cron: '0 4 * * *'   # 11h sáng giờ VN (UTC+7) mỗi ngày
-  workflow_dispatch:        # cho phép chạy thủ công 1 nút
+  repository_dispatch:
+    types: [new-ban-tin]    # Apps Script gọi khi có form submit mới
+  workflow_dispatch:        # chạy thủ công từ GitHub UI khi cần
 
 permissions:
   contents: write
